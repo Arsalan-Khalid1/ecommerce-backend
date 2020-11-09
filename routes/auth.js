@@ -5,8 +5,10 @@ const {
   signin,
   signout,
   requiredSignin,
+  isAuth,
 } = require ('../controller/auth');
 const {userSignupValidator} = require ('../validator/index');
+const {userById} = require ('../controller/user');
 
 router.post ('/signup', userSignupValidator, signup);
 router.post ('/signin', signin);
@@ -16,5 +18,6 @@ router.get ('/hello', requiredSignin, (req, res) => {
     message: 'hellow there',
   });
 });
+router.param ('userId', userById);
 
 module.exports = router;
