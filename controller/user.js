@@ -18,8 +18,8 @@ exports.read = (req, res) => {
   return res.json (req.profile);
 };
 
-exports.update = () => {
-  User.findOneAndUpdate (
+exports.update = (req, res) => {
+  User.findByOneAndUpdate (
     {_id: req.profile._id},
     {$set: req.body},
     {new: true},
@@ -29,8 +29,8 @@ exports.update = () => {
           error: 'You are not authorized to perform this action',
         });
       }
-      user.hashed_password = undefined;
-      user.salt = undefined;
+      req.profile.hashed_password = undefined;
+      req.profile.salt = undefined;
       res.json (user);
     }
   );
